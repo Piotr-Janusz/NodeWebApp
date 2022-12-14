@@ -14,7 +14,6 @@
 	<script src="/scripts/threex/threex-artoolkitcontext.js"></script>
 	<script src="/scripts/threex/threex-arbasecontrols.js"></script>
 	<script src="/scripts/threex/threex-armarkercontrols.js"></script>
-	<script src=""></script>
 </head>
 
 <body style='margin : 0px; overflow: hidden; font-family: Monospace;'>
@@ -33,6 +32,10 @@ var arToolkitSource, arToolkitContext;
 var markerRoot1;
 
 var mesh1;
+
+var mesh0;
+
+var computer;
 
 initialize();
 animate();
@@ -116,8 +119,6 @@ function initialize()
 	})
 
 	let geometry1 = new THREE.PlaneBufferGeometry(1,1, 4,4);
-	let loader = new THREE.TextureLoader();
-	// let texture = loader.load( 'images/earth.jpg', render );
 	let material1 = new THREE.MeshBasicMaterial( { color: 0x0000ff, opacity: 0.5 } );
 	mesh1 = new THREE.Mesh( geometry1, material1 );
 	mesh1.rotation.x = -Math.PI/2;
@@ -125,30 +126,41 @@ function initialize()
 	
 	function onProgress(xhr) { console.log( (xhr.loaded / xhr.total * 100) + '% loaded' ); }
 	function onError(xhr) { console.log( 'An error happened' ); }
-	
-	new THREE.MTLLoader()
-		.setPath( '/models/' )
-		.load( 'ComputerModel.mtl', function ( materials ) {
-			materials.preload();
-			new THREE.OBJLoader()
-				.setMaterials( materials )
-				.setPath( '/models/' )
-				.load( 'ComputerModel.obj', function ( group ) {
-					mesh0 = group.children[0];
-					mesh0.material.side = THREE.DoubleSide;
-					mesh0.position.y = 1;
-					mesh0.scale.set(0.25,0.25,0.25);
-					markerRoot1.add(mesh0);
-				}, onProgress, onError );
-		});
-}
 
+	const objLoader = new THREE.OBJLoader();
+	objLoader.load(
+		'/models/ComputerModel.obj',
+		function(object) {
+			mesh0 = object.children[0];
+			mesh0.name = "computer";
+			mesh0.material.side = THREE.DoubleSide;
+			mesh0.position.y = 1;
+			mesh0.scale.set(0.25,0.25,0.25);
+			markerRoot1.add(mesh0);
+		}
+	)
+	let pointLight = new THREE.PointLight( 0xffffff, 1, 100 );
+	pointLight.position.set(0.5,3,2);
+	// create a mesh to help visualize the position of the light
+	pointLight.add( 
+		new THREE.Mesh( 
+			new THREE.SphereBufferGeometry( 0.05, 16,8 ), 
+			new THREE.MeshBasicMaterial({ color: 0xffffff, opacity: 0.5 }) 
+		) 
+	);
+	markerRoot1.add( pointLight );
+}
+console.log(markerRoot1.children[0]);
+
+console.log(markerRoot1.getObjectByName("computer"));
 
 function update()
 {
 	// update artoolkit on every frame
 	if ( arToolkitSource.ready !== false )
 		arToolkitContext.update( arToolkitSource.domElement );
+	if(markerRoot1.visible)
+		mesh0.rotation.y += 0.01
 }
 
 
@@ -163,9 +175,11 @@ function animate()
 	requestAnimationFrame(animate);
 	deltaTime = clock.getDelta();
 	totalTime += deltaTime;
+	markerRoot1.children[0].rotation._y += 0.1;
 	update();
 	render();
 }
+
 
 </script>
 
