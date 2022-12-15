@@ -40,6 +40,9 @@ var listener;
 
 var sound;
 
+let playing = false;
+let rotation = 0;
+
 window.onload = function(){    
         setTimeout(function(){
             var resizeEvent = window.document.createEvent('UIEvents'); 
@@ -54,7 +57,7 @@ window.onload = function(){
 
 function initializeSound () {
 	sound = new Howl({
-  		src: ['/audio/hello_world.wav'],
+  		src: ['/audio/quantumWords.wav'],
   		autoplay: false,
   		loop: false,
   		volume: 0.5,
@@ -205,8 +208,16 @@ function update()
 	// update artoolkit on every frame
 	if ( arToolkitSource.ready !== false )
 		arToolkitContext.update( arToolkitSource.domElement );
+	console.log(markerRoot1.children);
 	if(markerRoot1.visible) {
-		//mesh0.rotation.y += 0.01
+		if(!playing) {
+			playing = true;
+			sound.play();
+		}
+		markerRoot1.children[2].rotation.y += 0.01;
+		if(rotation == 360) {
+			rotation = 0;
+		}
 		//ifr.src = path;
 		//sound.play();
 	}
