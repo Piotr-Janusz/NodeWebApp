@@ -18,11 +18,8 @@
 </head>
 
 <body style='margin : 0px; overflow: hidden; font-family: Monospace;'>
-
-	<iframe id="ifr" style="width:500px; height:500px; border:none;
-	position:absolute; left: 35%; top:25%;"></iframe>
-
-
+	<!--<iframe id="ifr" style="width:500px; height:500px; border:none;
+	position:absolute; left: 35%; top:25%;"></iframe>-->
 <script>
 
 var ifr = document.getElementById('ifr');
@@ -36,8 +33,6 @@ var arToolkitSource, arToolkitContext;
 var markerRoot1;
 
 var mesh1;
-
-var mesh0;
 
 var computer;
 
@@ -159,13 +154,13 @@ function initialize()
 	function onProgress(xhr) { console.log( (xhr.loaded / xhr.total * 100) + '% loaded' ); }
 	function onError(xhr) { console.log( 'An error happened' ); }
 
+
 	new THREE.MTLLoader()
 	.load('/models/Computer.mtl', function (materials) {
     	materials.preload();
     	new THREE.OBJLoader()
         	.setMaterials(materials)
         	.load('/models/Computer.obj', function (object) {
-            	object.position.y = - 95;
             	var texture = new THREE.TextureLoader().load('/models/ComputerTexture.png');
 
            		object.traverse(function (child) {   // aka setTexture
@@ -181,7 +176,6 @@ function initialize()
             	scene.add(object);
         	});
 	})
-
 	/*const objLoader = new THREE.OBJLoader();
 	objLoader.load(
 		'/models/ComputerModel.obj',
@@ -212,7 +206,7 @@ function update()
 	if ( arToolkitSource.ready !== false )
 		arToolkitContext.update( arToolkitSource.domElement );
 	if(markerRoot1.visible) {
-		mesh0.rotation.y += 0.01
+		//mesh0.rotation.y += 0.01
 		//ifr.src = path;
 		//sound.play();
 	}
