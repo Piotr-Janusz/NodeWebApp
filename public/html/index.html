@@ -73,7 +73,9 @@ function initialize()
 	});
 
 	renderer.setClearColor(new THREE.Color('lightgrey'), 0)
-	//renderer.setSize( 640, 480 );
+	console.log(window.innerWidth, window.innerHeight);
+	renderer.setSize(window.innerWidth, window.innerHeight);
+	//rederer.setSize(window.innerWidth, window.innerHeight);
 	renderer.domElement.style.position = 'absolute'
 	renderer.domElement.style.display = 'block';
 	renderer.domElement.style.top = '0px'
