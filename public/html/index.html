@@ -19,12 +19,15 @@
 
 <body style='margin : 0px; overflow: hidden; font-family: Monospace;'>
 
-<!-- 
-  Example created by Lee Stemkoski: https://github.com/stemkoski
-  Based on the AR.js library and examples created by Jerome Etienne: https://github.com/jeromeetienne/AR.js/
--->
+	<iframe id="ifr" style="width:500px; height:500px; border:none;
+	position:absolute; left: 35%; top:25%;"></iframe>
+
 
 <script>
+
+var ifr = document.getElementById('ifr');
+
+var path = '/html/quiz.html';
 
 var scene, camera, renderer, clock, deltaTime, totalTime;
 
@@ -94,7 +97,7 @@ function initialize()
 
 	function onResize()
 	{
-		arToolkitSource.onResize()	
+		arToolkitSource.onResize()
 		arToolkitSource.copySizeTo(renderer.domElement)	
 		if ( arToolkitContext.arController !== null )
 		{
@@ -120,6 +123,7 @@ function initialize()
 		cameraParametersUrl: '/data/camera_para.dat',
 		detectionMode: 'mono'
 	});
+
 	
 	// copy projection matrix to camera when initialization complete
 	arToolkitContext.init( function onCompleted(){
@@ -182,6 +186,7 @@ function update()
 		arToolkitContext.update( arToolkitSource.domElement );
 	if(markerRoot1.visible) {
 		mesh0.rotation.y += 0.01
+		//ifr.src = path;
 		//sound.play();
 	}
 }
