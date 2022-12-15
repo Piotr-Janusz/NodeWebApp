@@ -64,9 +64,8 @@ function initialize()
 	let ambientLight = new THREE.AmbientLight( 0xcccccc, 1.0 );
 	scene.add( ambientLight );
 				
-	camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 1000 );
-	scene.add(camera);
-
+	const camera = new THREE.PerspectiveCamera( 45, width.innerWidth / window.innerHeight, 1, 1000 );
+	scene.add( camera );
 	renderer = new THREE.WebGLRenderer({
 		antialias : true,
 		alpha: true
@@ -80,7 +79,7 @@ function initialize()
 	renderer.domElement.style.display = 'block';
 	renderer.domElement.style.top = '0px'
 	renderer.domElement.style.left = '0px'
-	//document.body.appendChild( renderer.domElement );
+	document.body.appendChild(renderer.domElement);
 
 	clock = new THREE.Clock();
 	deltaTime = 0;
