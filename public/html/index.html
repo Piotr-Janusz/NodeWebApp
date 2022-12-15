@@ -147,9 +147,30 @@ function initialize()
 	function onProgress(xhr) { console.log( (xhr.loaded / xhr.total * 100) + '% loaded' ); }
 	function onError(xhr) { console.log( 'An error happened' ); }
 
-	
+	new THREE.MTLLoader()
+	.load('/models/Computer.mtl', function (materials) {
+    	materials.preload();
+    	new THREE.OBJLoader()
+        	.setMaterials(materials)
+        	.load('/models/Computer.obj', function (object) {
+            	object.position.y = - 95;
+            	var texture = new THREE.TextureLoader().load('/models/ComputerTexture.png');
 
-	const objLoader = new THREE.OBJLoader();
+           		object.traverse(function (child) {   // aka setTexture
+               		if (child instanceof THREE.Mesh) {
+                    	child.material.map = texture;
+                	}
+            	});
+				mesh0 = object.children[0];
+				mesh0.material.side = THREE.DoubleSide;
+				mesh0.position.y = 1;
+				mesh0.scale.set(0.25,0.25,0.25);
+				markerRoot1.add(mesh0);
+            	scene.add(object);
+        	});
+	})
+
+	/*const objLoader = new THREE.OBJLoader();
 	objLoader.load(
 		'/models/ComputerModel.obj',
 		function(object) {
@@ -160,7 +181,7 @@ function initialize()
 			mesh0.scale.set(0.25,0.25,0.25);
 			markerRoot1.add(mesh0);
 		}
-	)
+	)*/
 	let pointLight = new THREE.PointLight( 0xffffff, 1, 100 );
 	pointLight.position.set(0.5,3,2);
 	// create a mesh to help visualize the position of the light
