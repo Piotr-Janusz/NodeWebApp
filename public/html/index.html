@@ -42,9 +42,17 @@ var listener;
 
 var sound;
 
-initialize();
-initializeSound();
-animate();
+window.onload = function(){    
+        setTimeout(function(){
+            var resizeEvent = window.document.createEvent('UIEvents'); 
+            resizeEvent.initUIEvent('resize', true, false, window, 0); 
+            window.dispatchEvent(resizeEvent);
+        }, 3000);
+		initialize();
+		initializeSound();
+		animate();
+    };
+
 
 function initializeSound () {
 	sound = new Howl({
@@ -193,9 +201,6 @@ function initialize()
 	);
 	markerRoot1.add( pointLight );
 }
-console.log(markerRoot1.children[0]);
-
-console.log(markerRoot1.getObjectByName("computer"));
 
 function update()
 {
