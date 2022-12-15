@@ -155,28 +155,27 @@ function initialize()
 	function onError(xhr) { console.log( 'An error happened' ); }
 
 
-	/*new THREE.MTLLoader()
+	new THREE.MTLLoader()
 	.load('/models/Computer.mtl', function (materials) {
     	materials.preload();
     	new THREE.OBJLoader()
         	.setMaterials(materials)
         	.load('/models/Computer.obj', function (object) {
             	var texture = new THREE.TextureLoader().load('/models/ComputerTexture.png');
-
            		object.traverse(function (child) {   // aka setTexture
                		if (child instanceof THREE.Mesh) {
                     	child.material.map = texture;
                 	}
             	});
 				mesh0 = object.children[0];
+				mesh0.name = "computer";
 				mesh0.material.side = THREE.DoubleSide;
 				mesh0.position.y = 1;
 				mesh0.scale.set(0.25,0.25,0.25);
 				markerRoot1.add(mesh0);
-            	scene.add(object);
         	});
-	})*/
-	const objLoader = new THREE.OBJLoader();
+	})
+	/*const objLoader = new THREE.OBJLoader();
 	objLoader.load(
 		'/models/ComputerModel.obj',
 		function(object) {
@@ -188,7 +187,7 @@ function initialize()
 			markerRoot1.add(mesh0);
 		}
 	)
-
+		*/
 	let pointLight = new THREE.PointLight( 0xffffff, 1, 100 );
 	pointLight.position.set(0.5,3,2);
 	// create a mesh to help visualize the position of the light
