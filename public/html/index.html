@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <head>
-	<meta name="viewport" content="width=device-width, user-scalable=no">
+	<meta name="viewport" content="width=device-width, user-scalable=no, intial-scale=1.0">
 	<title>Hello, world!</title>
 	<!-- include three.js library -->
 	<script src='/scripts/js/three.js'></script>
@@ -75,6 +75,7 @@ function initialize()
 	renderer.setClearColor(new THREE.Color('lightgrey'), 0)
 	renderer.setSize( 640, 480 );
 	renderer.domElement.style.position = 'absolute'
+	renderer.domElement.style.display = 'block';
 	renderer.domElement.style.top = '0px'
 	renderer.domElement.style.left = '0px'
 	document.body.appendChild( renderer.domElement );
